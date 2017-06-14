@@ -1,0 +1,6 @@
+[submodule "lib/vscode-yaml-languageservice/lib/vscode-json-languageservice"]
+	path = lib/vscode-yaml-languageservice/lib/vscode-json-languageservice
+	url = https://github.com/Microsoft/vscode-json-languageservice.git
+[submodule "lib/vscode-yaml-languageservice/src/vscode-json-languageservice"]
+	path = lib/vscode-yaml-languageservice/src/vscode-json-languageservice
+	url = https://github.com/Microsoft/vscode-json-languageservice.git
