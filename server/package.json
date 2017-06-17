@@ -18,8 +18,8 @@
     "@types/node": "^6.0.51"
   },
   "scripts": {
-    "compile": "gulp compile-extension:json-server",
-    "watch": "gulp watch-extension:json-server",
+    "compile": "installServerIntoExtension ../client ./package.json ./tsconfig.json && tsc -p .",
+    "watch": "installServerIntoExtension ../client ./package.json ./tsconfig.json && tsc --watch -p .",
     "install-service-next": "npm install vscode-json-languageservice@next -f -S",
     "install-service-local": "npm install ../../../../vscode-json-languageservice -f -S",
     "install-server-next": "npm install vscode-languageserver@next -f -S",

@@ -4,17 +4,18 @@
   "publisher": "vscode",
   "aiKey": "AIF-d9b70cd4-b9f9-4d70-929b-a071c400b217",
   "engines": {
-    "vscode": "0.10.x"
+    "vscode": "^1.8.0"
   },
   "activationEvents": [
     "onLanguage:json"
   ],
   "main": "./client/out/jsonMain",
   "scripts": {
-    "compile": "gulp compile-extension:json-client && gulp compile-extension:json-server",
-    "postinstall": "cd server && npm install",
+    "compile": "tsc -p server/ && tsc -p client/",
     "install-client-next": "npm install vscode-languageclient@next -f -S",
-    "install-client-local": "npm install ../../../vscode-languageserver-node/client -f -S"
+    "install-client-local": "npm install ../../../vscode-languageserver-node/client -f -S",
+    "prepublish": "npm run update-vscode && cd server && npm install",
+    "update-vscode": "node ./node_modules/vscode/bin/install"
   },
   "contributes": {
     "languages": [
@@ -127,6 +128,8 @@
     "vscode-nls": "^2.0.2"
   },
   "devDependencies": {
-    "@types/node": "^6.0.51"
+    "@types/node": "^6.0.51",
+    "typescript": "^2.3.4",
+    "vscode": "^1.1.0"
   }
 }
