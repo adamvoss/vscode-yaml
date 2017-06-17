@@ -1,127 +1,34 @@
 {
-  "name": "json",
-  "version": "0.1.0",
-  "publisher": "vscode",
-  "aiKey": "AIF-d9b70cd4-b9f9-4d70-929b-a071c400b217",
+  "name": "yaml",
+  "version": "0.0.1",
+  "publisher": "adamvoss",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/adamvoss/vscode-yaml.git"
+  },
+  "categories": [
+    "Linters",
+    "Languages"
+  ],
+  "keywords": [
+    "schema",
+    "validation",
+    "jsonschema",
+    "json-schema"
+  ],
   "engines": {
     "vscode": "^1.8.0"
   },
   "activationEvents": [
-    "onLanguage:json"
+    "onLanguage:yaml"
   ],
-  "main": "./client/out/jsonMain",
+  "main": "./client/out/yamlMain",
   "scripts": {
     "compile": "tsc -p server/ && tsc -p client/",
-    "install-client-next": "npm install vscode-languageclient@next -f -S",
-    "install-client-local": "npm install ../../../vscode-languageserver-node/client -f -S",
     "prepublish": "npm run update-vscode && cd server && npm install",
     "update-vscode": "node ./node_modules/vscode/bin/install"
   },
-  "contributes": {
-    "languages": [
-      {
-        "id": "json",
-        "aliases": [
-          "JSON",
-          "json"
-        ],
-        "extensions": [
-          ".json",
-          ".bowerrc",
-          ".jshintrc",
-          ".jscsrc",
-          ".eslintrc",
-          ".babelrc",
-          ".webmanifest"
-        ],
-        "mimetypes": [
-          "application/json",
-          "application/manifest+json"
-        ],
-        "configuration": "./language-configuration.json"
-      }
-    ],
-    "grammars": [
-      {
-        "language": "json",
-        "scopeName": "source.json",
-        "path": "./syntaxes/JSON.tmLanguage"
-      }
-    ],
-    "jsonValidation": [
-      {
-        "fileMatch": "*.schema.json",
-        "url": "http://json-schema.org/draft-04/schema#"
-      }
-    ],
-    "configuration": {
-      "id": "json",
-      "order": 20,
-      "type": "object",
-      "title": "JSON",
-      "properties": {
-        "json.schemas": {
-          "type": "array",
-          "description": "%json.schemas.desc%",
-          "items": {
-            "type": "object",
-            "default": {
-              "fileMatch": [
-                "/myfile"
-              ],
-              "url": "schemaURL"
-            },
-            "properties": {
-              "url": {
-                "type": "string",
-                "default": "/user.schema.json",
-                "description": "%json.schemas.url.desc%"
-              },
-              "fileMatch": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "default": "MyFile.json",
-                  "description": "%json.schemas.fileMatch.item.desc%"
-                },
-                "minItems": 1,
-                "description": "%json.schemas.fileMatch.desc%"
-              },
-              "schema": {
-                "$ref": "http://json-schema.org/draft-04/schema#",
-                "description": "%json.schemas.schema.desc%"
-              }
-            }
-          }
-        },
-        "json.format.enable": {
-          "type": "boolean",
-          "default": true,
-          "description": "%json.format.enable.desc%"
-        },
-        "json.trace.server": {
-          "type": "string",
-          "enum": [
-            "off",
-            "messages",
-            "verbose"
-          ],
-          "default": "off",
-          "description": "%json.tracing.desc%"
-        },
-        "json.colorDecorators.enable": {
-          "type": "boolean",
-          "default": true,
-          "description": "%json.colorDecorators.enable.desc%"
-        }
-      }
-    },
-    "configurationDefaults": {
-      "[json]": {
-        "editor.quickSuggestions": { "strings": true }
-      }
-    }
-  },
+  "contributes": {},
   "dependencies": {
     "vscode-languageclient": "^3.1.0-alpha.1",
     "vscode-nls": "^2.0.2"

@@ -1,4 +1,5 @@
 /*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Adam Voss. All rights reserved.
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -18,7 +19,7 @@ namespace VSCodeContentRequest {
 }
 
 namespace ColorSymbolRequest {
-	export const type: RequestType<string, Range[], any, any> = new RequestType('json/colorSymbols');
+	export const type: RequestType<string, Range[], any, any> = new RequestType('yaml/colorSymbols');
 }
 
 export interface ISchemaAssociations {
@@ -40,7 +41,7 @@ export function activate(context: ExtensionContext) {
 	let packageInfo = getPackageInfo(context);
 
 	// The server is implemented in node
-	let serverModule = context.asAbsolutePath(path.join('server', 'out', 'jsonServerMain.js'));
+	let serverModule = context.asAbsolutePath(path.join('server', 'out', 'yamlServerMain.js'));
 	// The debug options for the server
 	let debugOptions = { execArgv: ['--nolazy', '--debug=6004'] };
 
@@ -53,17 +54,17 @@ export function activate(context: ExtensionContext) {
 
 	// Options to control the language client
 	let clientOptions: LanguageClientOptions = {
-		// Register the server for json documents
-		documentSelector: ['json'],
+		// Register the server for yaml documents
+		documentSelector: ['yaml'],
 		synchronize: {
-			// Synchronize the setting section 'json' to the server
-			configurationSection: ['json', 'http.proxy', 'http.proxyStrictSSL'],
-			fileEvents: workspace.createFileSystemWatcher('**/*.json')
+			// Synchronize the setting section 'yaml' to the server
+			configurationSection: ['yaml', 'http.proxy', 'http.proxyStrictSSL'],
+			fileEvents: workspace.createFileSystemWatcher('**/*.?(e)y?(a)ml')
 		}
 	};
 
 	// Create the language client and start the client.
-	let client = new LanguageClient('json', localize('jsonserver.name', 'JSON Language Server'), serverOptions, clientOptions);
+	let client = new LanguageClient('yaml', localize('yamlserver.name', 'YAML Language Server'), serverOptions, clientOptions);
 	let disposable = client.start();
 	client.onReady().then(() => {
 		// handle content request
@@ -84,7 +85,7 @@ export function activate(context: ExtensionContext) {
 		let isDecoratorEnabled = (languageId: string) => {
 			return workspace.getConfiguration().get<boolean>(languageId + '.colorDecorators.enable');
 		};
-		disposable = activateColorDecorations(colorRequestor, { json: true }, isDecoratorEnabled);
+		disposable = activateColorDecorations(colorRequestor, { yaml: true }, isDecoratorEnabled);
 		context.subscriptions.push(disposable);
 	});
 
@@ -92,13 +93,15 @@ export function activate(context: ExtensionContext) {
 	// client can be deactivated on extension deactivation
 	context.subscriptions.push(disposable);
 
-	languages.setLanguageConfiguration('json', {
+	languages.setLanguageConfiguration('yaml', {
 		wordPattern: /("(?:[^\\\"]*(?:\\.)?)*"?)|[^\s{}\[\],:]+/
 	});
 }
 
 function getSchemaAssociation(context: ExtensionContext): ISchemaAssociations {
 	let associations: ISchemaAssociations = {};
+	// TODO: We probably should segregate JSON Schemas from YAML Schemas
+	// Thus make this would change.
 	extensions.all.forEach(extension => {
 		let packageJSON = extension.packageJSON;
 		if (packageJSON && packageJSON.contributes && packageJSON.contributes.jsonValidation) {

@@ -1,4 +1,5 @@
 /*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Adam Voss. All rights reserved.
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -119,7 +120,7 @@ let schemaRequestService = (uri: string): Thenable<string> => {
 	});
 };
 
-// create the JSON language service
+// create the YAML language service
 let languageService = getLanguageService({
 	schemaRequestService,
 	workspaceContext,
@@ -162,7 +163,7 @@ connection.onDidChangeConfiguration((change) => {
 		if (enableFormatter) {
 			if (!formatterRegistration) {
 				console.log('enable');
-				formatterRegistration = connection.client.register(DocumentRangeFormattingRequest.type, { documentSelector: [{ language: 'json' }] });
+				formatterRegistration = connection.client.register(DocumentRangeFormattingRequest.type, { documentSelector: [{ language: 'yaml' }] });
 			}
 		} else if (formatterRegistration) {
 			console.log('enable');
@@ -276,16 +277,16 @@ connection.onDidChangeWatchedFiles((change) => {
 	}
 });
 
-let jsonDocuments = getLanguageModelCache<JSONDocument>(10, 60, document => languageService.parseJSONDocument(document));
+let yamlDocuments = getLanguageModelCache<JSONDocument>(10, 60, document => languageService.parseJSONDocument(document));
 documents.onDidClose(e => {
-	jsonDocuments.onDocumentRemoved(e.document);
+	yamlDocuments.onDocumentRemoved(e.document);
 });
 connection.onShutdown(() => {
-	jsonDocuments.dispose();
+	yamlDocuments.dispose();
 });
 
 function getJSONDocument(document: TextDocument): JSONDocument {
-	return jsonDocuments.get(document);
+	return yamlDocuments.get(document);
 }
 
 connection.onCompletion(textDocumentPosition => {
