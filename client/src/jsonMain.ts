@@ -8,7 +8,6 @@ import * as path from 'path';
 
 import { workspace, languages, ExtensionContext, extensions, Uri, Range } from 'vscode';
 import { LanguageClient, LanguageClientOptions, RequestType, ServerOptions, TransportKind, NotificationType } from 'vscode-languageclient';
-import TelemetryReporter from 'vscode-extension-telemetry';
 import { activateColorDecorations } from "./colorDecorators";
 
 import * as nls from 'vscode-nls';
@@ -39,8 +38,6 @@ interface IPackageInfo {
 export function activate(context: ExtensionContext) {
 
 	let packageInfo = getPackageInfo(context);
-	let telemetryReporter: TelemetryReporter = packageInfo && new TelemetryReporter(packageInfo.name, packageInfo.version, packageInfo.aiKey);
-	context.subscriptions.push(telemetryReporter);
 
 	// The server is implemented in node
 	let serverModule = context.asAbsolutePath(path.join('server', 'out', 'jsonServerMain.js'));
@@ -69,12 +66,6 @@ export function activate(context: ExtensionContext) {
 	let client = new LanguageClient('json', localize('jsonserver.name', 'JSON Language Server'), serverOptions, clientOptions);
 	let disposable = client.start();
 	client.onReady().then(() => {
-		client.onTelemetry(e => {
-			if (telemetryReporter) {
-				telemetryReporter.sendTelemetryEvent(e.key, e.data);
-			}
-		});
-
 		// handle content request
 		client.onRequest(VSCodeContentRequest.type, (uriPath: string) => {
 			let uri = Uri.parse(uriPath);
