@@ -1,5 +1,6 @@
 MIT License
 
+Copyright (c) 2017 - present Adam Voss
 Copyright (c) 2015 - present Microsoft Corporation
 
 All rights reserved.
