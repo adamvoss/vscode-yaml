@@ -17,7 +17,7 @@ import fs = require('fs');
 import URI from './utils/uri';
 import * as URL from 'url';
 import Strings = require('./utils/strings');
-import { JSONDocument, JSONSchema, LanguageSettings, getLanguageService } from 'vscode-json-languageservice';
+import { JSONDocument, JSONSchema, LanguageSettings, getLanguageService } from 'vscode-yaml-languageservice';
 import { getLanguageModelCache } from './languageModelCache';
 
 import * as nls from 'vscode-nls';

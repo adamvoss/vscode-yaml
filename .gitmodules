@@ -1,0 +1,3 @@
+[submodule "server/vscode-yaml-languageservice"]
+	path = server/vscode-yaml-languageservice
+	url = https://github.com/adamvoss/vscode-yaml-languageservice
