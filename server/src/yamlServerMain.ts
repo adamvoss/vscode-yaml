@@ -8,7 +8,7 @@
 import {
 	createConnection, IConnection,
 	TextDocuments, TextDocument, InitializeParams, InitializeResult, NotificationType, RequestType,
-	DocumentRangeFormattingRequest, Disposable, Range
+	DocumentFormattingRequest, Disposable, Range
 } from 'vscode-languageserver';
 
 import { xhr, XHRResponse, configure as configureHttpRequests, getErrorStatusDescription } from 'request-light';
@@ -78,7 +78,7 @@ connection.onInitialize((params: InitializeParams): InitializeResult => {
 			completionProvider: clientSnippetSupport ? { resolveProvider: true, triggerCharacters: ['"', ':'] } : null,
 			hoverProvider: true,
 			documentSymbolProvider: true,
-			documentRangeFormattingProvider: false
+			documentFormattingProvider: false
 		}
 	};
 });
@@ -129,10 +129,12 @@ let languageService = getLanguageService({
 
 // The settings interface describes the server relevant settings part
 interface Settings {
-	json: {
-		schemas: JSONSchemaSettings[];
+	yaml: {
 		format: { enable: boolean; };
 	};
+	json: {
+		schemas: JSONSchemaSettings[];
+	}
 	http: {
 		proxy: string;
 		proxyStrictSSL: boolean;
@@ -159,11 +161,11 @@ connection.onDidChangeConfiguration((change) => {
 
 	// dynamically enable & disable the formatter
 	if (clientDynamicRegisterSupport) {
-		let enableFormatter = settings && settings.json && settings.json.format && settings.json.format.enable;
+		let enableFormatter = settings && settings.yaml && settings.yaml.format && settings.yaml.format.enable;
 		if (enableFormatter) {
 			if (!formatterRegistration) {
 				console.log('enable');
-				formatterRegistration = connection.client.register(DocumentRangeFormattingRequest.type, { documentSelector: [{ language: 'yaml' }] });
+				formatterRegistration = connection.client.register(DocumentFormattingRequest.type, { documentSelector: [{ language: 'yaml' }] });
 			}
 		} else if (formatterRegistration) {
 			console.log('enable');
@@ -182,7 +184,6 @@ connection.onNotification(SchemaAssociationNotification.type, associations => {
 function updateConfiguration() {
 	let languageSettings: LanguageSettings = {
 		validate: true,
-		allowComments: true,
 		schemas: []
 	};
 	if (schemaAssociations) {
@@ -311,9 +312,9 @@ connection.onDocumentSymbol(documentSymbolParams => {
 	return languageService.findDocumentSymbols(document, jsonDocument);
 });
 
-connection.onDocumentRangeFormatting(formatParams => {
+connection.onDocumentFormatting(formatParams => {
 	let document = documents.get(formatParams.textDocument.uri);
-	return languageService.format(document, formatParams.range, formatParams.options);
+	return languageService.format(document, formatParams.options);
 });
 
 connection.onRequest(ColorSymbolRequest.type, uri => {

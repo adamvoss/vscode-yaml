@@ -29,7 +29,18 @@
     "update-vscode": "node ./node_modules/vscode/bin/install",
     "vscode:prepublish": "npm run compile"
   },
-  "contributes": {},
+  "contributes": {
+    "configuration": {
+      "title": "YAML",
+      "properties": {
+        "yaml.format.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "%yaml.format.enable.desc%"
+        }
+      }
+    }
+  },
   "dependencies": {
     "vscode-languageclient": "^3.1.0-alpha.1",
     "vscode-nls": "^2.0.2"
