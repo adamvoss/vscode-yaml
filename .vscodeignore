@@ -1,8 +1,11 @@
-.vscode/**
+**/.vscode/**
 .vscode-test/**
 out/test/**
 test/**
-src/**
+client/src/**
+server/src/**
+server/vscode-yaml-languageservice/**
 **/*.map
 .gitignore
-tsconfig.json
+**/tsconfig.json
++.travis.yml
