@@ -1,8 +1,8 @@
-**/.vscode/**
+.vscode/**
 .vscode-test/**
 out/test/**
-**/test/**
-**/src/**
+test/**
+src/**
 **/*.map
 .gitignore
 tsconfig.json
