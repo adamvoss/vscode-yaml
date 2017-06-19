@@ -75,7 +75,8 @@ connection.onInitialize((params: InitializeParams): InitializeResult => {
 		capabilities: {
 			// Tell the client that the server works in FULL text document sync mode
 			textDocumentSync: documents.syncKind,
-			completionProvider: clientSnippetSupport ? { resolveProvider: true, triggerCharacters: ['"', ':'] } : null,
+			// Disabled because too JSON centric
+			completionProvider: false,
 			hoverProvider: true,
 			documentSymbolProvider: true,
 			documentFormattingProvider: false
@@ -290,6 +291,8 @@ function getJSONDocument(document: TextDocument): JSONDocument {
 	return yamlDocuments.get(document);
 }
 
+/** Disabled, implementation is too JSON centric
+
 connection.onCompletion(textDocumentPosition => {
 	let document = documents.get(textDocumentPosition.textDocument.uri);
 	let jsonDocument = getJSONDocument(document);
@@ -299,6 +302,8 @@ connection.onCompletion(textDocumentPosition => {
 connection.onCompletionResolve(completionItem => {
 	return languageService.doResolve(completionItem);
 });
+
+*/
 
 connection.onHover(textDocumentPositionParams => {
 	let document = documents.get(textDocumentPositionParams.textDocument.uri);
