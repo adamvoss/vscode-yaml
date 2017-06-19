@@ -10,4 +10,4 @@ The attached notices are provided for information only.
 This project is forked from the [json extension](https://github.com/Microsoft/vscode/tree/master/extensions/json) within [Visual Studio Code](https://github.com/Microsoft/vscode/) copyright Microsoft Corporation and licensed under the [MIT license](https://github.com/Microsoft/vscode-json-languageservice/blob/master/LICENSE.md).
 
 ## License notice for vscode-yaml-languageservice
-[**vscode-yaml-languageservice**](https://github.com/adamvoss/vscode-yaml-languageservice) is used to provide many of the language checking features.  It is licensed under the [MIT license](https://github.com/adamvoss/vscode-yaml-languageservice).
+[**vscode-yaml-languageservice**](https://github.com/adamvoss/vscode-yaml-languageservice) is used to provide many of the language checking features.  It is licensed under the [MIT license](https://github.com/adamvoss/vscode-yaml-languageservice).  Be sure see its [ACKNOWLEDGMENTS](https://github.com/adamvoss/vscode-yaml-languageservice/blob/master/ACKNOWLEDGMENTS.md) for information on the libraries that power it.

@@ -100,8 +100,6 @@ export function activate(context: ExtensionContext) {
 
 function getSchemaAssociation(context: ExtensionContext): ISchemaAssociations {
 	let associations: ISchemaAssociations = {};
-	// TODO: We probably should segregate JSON Schemas from YAML Schemas
-	// Thus make this would change.
 	extensions.all.forEach(extension => {
 		let packageJSON = extension.packageJSON;
 		if (packageJSON && packageJSON.contributes && packageJSON.contributes.jsonValidation) {

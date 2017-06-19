@@ -1,5 +1,7 @@
 {
   "name": "yaml",
+  "displayName": "YAML",
+  "description": "YAML for Visual Studio Code",
   "version": "0.0.1",
   "publisher": "adamvoss",
   "license": "MIT",
@@ -16,6 +18,7 @@
     "jsonschema",
     "json-schema"
   ],
+  "icon": "img/icon.png",
   "engines": {
     "vscode": "^1.8.0"
   },
