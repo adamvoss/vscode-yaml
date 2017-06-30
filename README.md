@@ -23,6 +23,7 @@ Schemas are handled exactly [same way they are with JSON in Visual Studio Code](
 ## Known Issues
  - No support has been implemented for anchor reference or includes. ([relevant code](https://github.com/adamvoss/vscode-yaml-languageservice/blob/e878a9636fc3cf43d9105c8c1ba02f02fea6d18c/src/parser/yamlParser.ts#L237-L242))
  - Only one document is supported per file.
+ - Color decorators (`yaml.colorDecorators.enable`) do not work even when enabled.
 
 ## Acknowledgments
 This extension would not have been possible without numerous open source projects.  Please see [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md).
