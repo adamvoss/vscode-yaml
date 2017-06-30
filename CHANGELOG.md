@@ -1,5 +1,8 @@
 # Change Log
 
+## Unreleased
+- Update upstream language service dependencies
+
 ## 0.0.2
 - **Format Document** now works when there are multiple documents in the file.  Multiple documents in a single file is still generally unsupported.
 
