@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 0.0.3
 - Fixes use of schemas defined in settings.  Previously they did not work.
 - Update upstream language service dependencies
 
