@@ -36,6 +36,11 @@
     "configuration": {
       "title": "YAML",
       "properties": {
+        "yaml.colorDecorators.enable": {
+          "type": "boolean",
+          "default": false,
+          "description": "%yaml.colorDecorators.enable.desc%"
+        },
         "yaml.format.enable": {
           "type": "boolean",
           "default": true,
