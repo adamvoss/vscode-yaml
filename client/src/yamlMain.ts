@@ -58,7 +58,7 @@ export function activate(context: ExtensionContext) {
 		documentSelector: ['yaml'],
 		synchronize: {
 			// Synchronize the setting section 'yaml' to the server
-			configurationSection: ['yaml', 'http.proxy', 'http.proxyStrictSSL'],
+			configurationSection: ['yaml', 'json.schemas', 'http.proxy', 'http.proxyStrictSSL'],
 			fileEvents: workspace.createFileSystemWatcher('**/*.?(e)y?(a)ml')
 		}
 	};
