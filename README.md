@@ -21,7 +21,7 @@ Schemas are handled exactly [same way they are with JSON in Visual Studio Code](
 [extension]: https://code.visualstudio.com/docs/extensionAPI/extension-points#_contributesjsonvalidation
 
 ## Known Issues
- - No support has been implemented for anchor reference or includes. ([relevant code](https://github.com/adamvoss/vscode-yaml-languageservice/blob/e878a9636fc3cf43d9105c8c1ba02f02fea6d18c/src/parser/yamlParser.ts#L237-L242))
+ - No support has been implemented for include references. ([relevant code](https://github.com/adamvoss/vscode-yaml-languageservice/blob/9199669d241f8fb5fde801399c4cd5abd0bc6d52/src/parser/yamlParser.ts#L243-L247))
  - Only one document is supported per file.
  - Color decorators (`yaml.colorDecorators.enable`) do not work even when enabled.
 
