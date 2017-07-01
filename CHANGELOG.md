@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 0.0.5
 - Add support for anchor references.
 
 ## 0.0.4
