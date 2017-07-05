@@ -11,3 +11,7 @@ This project is forked from the [json extension](https://github.com/Microsoft/vs
 
 ## License notice for vscode-yaml-languageservice
 [**vscode-yaml-languageservice**](https://github.com/adamvoss/vscode-yaml-languageservice) is used to provide many of the language checking features.  It is licensed under the [MIT license](https://github.com/adamvoss/vscode-yaml-languageservice).  Be sure see its [ACKNOWLEDGMENTS](https://github.com/adamvoss/vscode-yaml-languageservice/blob/master/ACKNOWLEDGMENTS.md) for information on the libraries that power it.
+
+## vscode-yaml-validation
+While no code was used from [**vscode-yaml-validation**](https://marketplace.visualstudio.com/items?itemName=djabraham.vscode-yaml-validation) by [Daniel Abraham](https://github.com/djabraham) deserves mention for being the first Visual Studio Code extension to prove the concept and bring JSON Schema Validation to YAML files.
+
