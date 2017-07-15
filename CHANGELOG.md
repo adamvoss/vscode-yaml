@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 0.0.6
 - Update **yaml-ast-parser** to [0.0.34](https://github.com/mulesoft-labs/yaml-ast-parser/releases/tag/0.0.34).
   - Some parsing warnings will now correctly display as warnings instead of errors.
   - Warning is now issued when using tabs in a YAML document.
