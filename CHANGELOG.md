@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 0.0.7
 - Add support for multiple documents in a single file.
 
 ## 0.0.6
