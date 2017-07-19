@@ -17,7 +17,7 @@ import fs = require('fs');
 import URI from './utils/uri';
 import * as URL from 'url';
 import Strings = require('./utils/strings');
-import { JSONDocument, JSONSchema, LanguageSettings, getLanguageService } from 'vscode-yaml-languageservice';
+import { YAMLDocument, JSONSchema, LanguageSettings, getLanguageService } from 'vscode-yaml-languageservice';
 import { getLanguageModelCache } from './languageModelCache';
 
 import * as nls from 'vscode-nls';
@@ -279,7 +279,7 @@ connection.onDidChangeWatchedFiles((change) => {
 	}
 });
 
-let yamlDocuments = getLanguageModelCache<JSONDocument>(10, 60, document => languageService.parseJSONDocument(document));
+let yamlDocuments = getLanguageModelCache<YAMLDocument>(10, 60, document => languageService.parseYAMLDocument(document));
 documents.onDidClose(e => {
 	yamlDocuments.onDocumentRemoved(e.document);
 });
@@ -287,7 +287,7 @@ connection.onShutdown(() => {
 	yamlDocuments.dispose();
 });
 
-function getJSONDocument(document: TextDocument): JSONDocument {
+function getJSONDocument(document: TextDocument): YAMLDocument {
 	return yamlDocuments.get(document);
 }
 

@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.0.7
+- Add support for multiple documents in a single file.
+
 ## 0.0.6
 - Update **yaml-ast-parser** to [0.0.34](https://github.com/mulesoft-labs/yaml-ast-parser/releases/tag/0.0.34).
   - Some parsing warnings will now correctly display as warnings instead of errors.
