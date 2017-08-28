@@ -20,7 +20,7 @@
   ],
   "icon": "img/icon.png",
   "engines": {
-    "vscode": "^1.8.0"
+    "vscode": "^1.15.0"
   },
   "activationEvents": [
     "onLanguage:yaml"
@@ -53,6 +53,6 @@
   "devDependencies": {
     "@types/node": "^6.0.51",
     "typescript": "^2.3.4",
-    "vscode": "^1.1.0"
+    "vscode": "^1.1.5"
   }
 }
