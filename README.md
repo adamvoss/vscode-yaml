@@ -31,7 +31,6 @@ This extension would not have been possible without numerous open source project
 Contributions are welcome!  To install dependencies and begin work, run:
 
 ```sh
-git submodule update --init --recursive
 npm install
 ```
 

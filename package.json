@@ -2,7 +2,7 @@
   "name": "yaml",
   "displayName": "YAML",
   "description": "YAML for Visual Studio Code",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "publisher": "adamvoss",
   "license": "MIT",
   "repository": {
@@ -28,7 +28,7 @@
   "main": "./client/out/yamlMain",
   "scripts": {
     "compile": "tsc -p server/ && tsc -p client/",
-    "prepublish": "npm run update-vscode && cd server && ./npminstall.sh",
+    "prepublish": "npm run update-vscode && cd server && npm install",
     "update-vscode": "node ./node_modules/vscode/bin/install",
     "vscode:prepublish": "npm run compile"
   },
