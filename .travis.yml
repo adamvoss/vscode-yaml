@@ -1,0 +1,26 @@
+language: node_js
+dist: trusty
+sudo: false
+node_js:
+  - '6'
+install:
+- npm install
+- npm install vsce
+script:
+- vsce package
+deploy:
+  provider: releases
+  api_key:
+    secure: >-
+      Pmd+rhmb6NfW1xgE7/4/RTMEJvdSxD9v8IGaRHx3ZCF5tJybONaPCSQqrtnzy3Hb2/iKihQjG8rXr/9Mtwb9xvN416sQcceFKbDrtvNNI0DGr/f6mWUivpM3h06DQ/HSjcciV9sZmsmrO3cjff03wLcSWQSq6aL4cztEQhQX4YW9Gaxov66DGfOhiNXonsGjDLVrGT2KIOpIITvw+0zFqGQ5Ae1LGCVow+roYlUiF36ru0KBWHTByiibqy5wqrrFuqrYDuHclDE0028UpbSkCxHB92zNRgghyTNDTp+XO/wdbipFZVlstrDeNgxnZmLjcLk6/ErOgZFVBCA0xaF/IPXZeyxuJK0u1EePmhW4pTEe65pdpF5ivrxw2rhN/VFh2r1/w7+KHHzEbNX9vZZZWKsH6P/Edok7kCPmb92WgW5P0yZJyNrfp9/HHMYZ17KbN+fQfgI0thj+aUdZ0v06W3PqwYdK32ifCmYl9sQdk/e57gpSOh72chlgQXshLNYdYwzZFpj/Dj2vRyFsFhMNef8TLFv9NChrjS6Hj08WrdIpVRNnRILOFVS7ICk2i7IqdbZli1FWw/c1kpCi8Kc1GyZZChVxGA4UT0wscU7pGgcZzDN5vQWvwKYh3NHXjOw58WW6IiY8zMx1XU65qFZH3/PK6FJv/EdNhJtt9HFRmF4=
+  file: '*.vsix'
+  file_glob: true
+  skip_cleanup: true
+  'on':
+    tags: true
+after_deploy:
+  - vsce publish -p $VSCE_TOKEN
+env:
+  global:
+    secure: >-
+      DAbORpRp2psQrD1dVJdA74mWXziM9H5gN6cwuZFQQ2diDFRt99rXgqgjypKGWVF7Y/uii909QDmXa86SnWOL647RaCBrt5h3Z4Co6A9bwLPXcGU2Q/O1LgSEp86KC7ys9Be6urYDPGXKf1+UXpxER61MqUcxknCoHuksYaQyMNL3Quf1eWelbfLqKI+gSGwUnpGqg9L9PuH337O3uHLjvxBSRElLxrohBwrsXeMlRZfuxk0j3IVIaD+k7TOJ5nm+4kjb8PCvvMymiykJ997nnINAqSnHhlCGbnRHepe0vR+ouU9ZD+BKHP1Akrbh3ckrJNyYPTDSBb/G+kAgEhUXIkSmVyZK/tJgPQnfFFKox9LQZDAwhHetGHd+RS3hJUVvcii9cipqD313EFMvmw9pyLvwersOn08JfZ98oaNBLSrCBOcOtqw9E23QYPJZtpLMhqaRzPX0cGl+RFd1nyuc2OYM/Z80ckHetWTO3wL02hAdjtlJg7sHvwtHEzN1wkuQ8yWPVeOCr3jS5HbXIj65l19z2Af5D+NHJFHe3bsjzIGwNlgsWAlyoFiQg9WMLH3hA1GdDTipNUomEfbu4yiytGeO8DBOXUaYW2xLBGfxfIQQf2iI7zIKl9ljbO99bcm6h9VdF/IjhUeWBAHQUuZJorXS/rHTHhpaX//ZP3zYyYI=

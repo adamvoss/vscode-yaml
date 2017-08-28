@@ -1,8 +1,8 @@
 {
-  "name": "vscode-json-languageserver",
-  "description": "JSON language server",
+  "name": "vscode-yaml-languageserver",
+  "description": "YAML language server",
   "version": "1.0.0",
-  "author": "Microsoft Corporation",
+  "author": "Adam Voss",
   "license": "MIT",
   "engines": {
     "node": "*"
@@ -10,19 +10,15 @@
   "dependencies": {
     "jsonc-parser": "^1.0.0",
     "request-light": "^0.2.1",
-    "vscode-json-languageservice": "^2.0.14",
     "vscode-languageserver": "^3.4.0-next.4",
-    "vscode-nls": "^2.0.2"
+    "vscode-nls": "^2.0.2",
+    "vscode-yaml-languageservice": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "^6.0.51"
   },
   "scripts": {
-    "compile": "gulp compile-extension:json-server",
-    "watch": "gulp watch-extension:json-server",
-    "install-service-next": "npm install vscode-json-languageservice@next -f -S",
-    "install-service-local": "npm install ../../../../vscode-json-languageservice -f -S",
-    "install-server-next": "npm install vscode-languageserver@next -f -S",
-    "install-server-local": "npm install ../../../../vscode-languageserver-node/server -f -S"
+    "compile": "installServerIntoExtension ../client ./package.json ./tsconfig.json && tsc -p .",
+    "watch": "installServerIntoExtension ../client ./package.json ./tsconfig.json && tsc --watch -p ."
   }
 }

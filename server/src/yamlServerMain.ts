@@ -1,4 +1,5 @@
 /*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Adam Voss. All rights reserved.
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -7,7 +8,7 @@
 import {
 	createConnection, IConnection,
 	TextDocuments, TextDocument, InitializeParams, InitializeResult, NotificationType, RequestType,
-	DocumentRangeFormattingRequest, Disposable, Range
+	DocumentFormattingRequest, Disposable, Range
 } from 'vscode-languageserver';
 
 import { xhr, XHRResponse, configure as configureHttpRequests, getErrorStatusDescription } from 'request-light';
@@ -16,7 +17,7 @@ import fs = require('fs');
 import URI from './utils/uri';
 import * as URL from 'url';
 import Strings = require('./utils/strings');
-import { JSONDocument, JSONSchema, LanguageSettings, getLanguageService } from 'vscode-json-languageservice';
+import { YAMLDocument, JSONSchema, LanguageSettings, getLanguageService } from 'vscode-yaml-languageservice';
 import { getLanguageModelCache } from './languageModelCache';
 
 import * as nls from 'vscode-nls';
@@ -74,10 +75,11 @@ connection.onInitialize((params: InitializeParams): InitializeResult => {
 		capabilities: {
 			// Tell the client that the server works in FULL text document sync mode
 			textDocumentSync: documents.syncKind,
-			completionProvider: clientSnippetSupport ? { resolveProvider: true, triggerCharacters: ['"', ':'] } : null,
+			// Disabled because too JSON centric
+			// completionProvider: { resolveProvider: false },
 			hoverProvider: true,
 			documentSymbolProvider: true,
-			documentRangeFormattingProvider: false
+			documentFormattingProvider: false
 		}
 	};
 });
@@ -119,7 +121,7 @@ let schemaRequestService = (uri: string): Thenable<string> => {
 	});
 };
 
-// create the JSON language service
+// create the YAML language service
 let languageService = getLanguageService({
 	schemaRequestService,
 	workspaceContext,
@@ -128,10 +130,12 @@ let languageService = getLanguageService({
 
 // The settings interface describes the server relevant settings part
 interface Settings {
-	json: {
-		schemas: JSONSchemaSettings[];
+	yaml: {
 		format: { enable: boolean; };
 	};
+	json: {
+		schemas: JSONSchemaSettings[];
+	}
 	http: {
 		proxy: string;
 		proxyStrictSSL: boolean;
@@ -158,10 +162,10 @@ connection.onDidChangeConfiguration((change) => {
 
 	// dynamically enable & disable the formatter
 	if (clientDynamicRegisterSupport) {
-		let enableFormatter = settings && settings.json && settings.json.format && settings.json.format.enable;
+		let enableFormatter = settings && settings.yaml && settings.yaml.format && settings.yaml.format.enable;
 		if (enableFormatter) {
 			if (!formatterRegistration) {
-				formatterRegistration = connection.client.register(DocumentRangeFormattingRequest.type, { documentSelector: [{ language: 'json' }] });
+				formatterRegistration = connection.client.register(DocumentFormattingRequest.type, { documentSelector: [{ language: 'yaml' }] });
 			}
 		} else if (formatterRegistration) {
 			formatterRegistration.then(r => r.dispose());
@@ -179,7 +183,6 @@ connection.onNotification(SchemaAssociationNotification.type, associations => {
 function updateConfiguration() {
 	let languageSettings: LanguageSettings = {
 		validate: true,
-		allowComments: true,
 		schemas: []
 	};
 	if (schemaAssociations) {
@@ -274,17 +277,19 @@ connection.onDidChangeWatchedFiles((change) => {
 	}
 });
 
-let jsonDocuments = getLanguageModelCache<JSONDocument>(10, 60, document => languageService.parseJSONDocument(document));
+let yamlDocuments = getLanguageModelCache<YAMLDocument>(10, 60, document => languageService.parseYAMLDocument(document));
 documents.onDidClose(e => {
-	jsonDocuments.onDocumentRemoved(e.document);
+	yamlDocuments.onDocumentRemoved(e.document);
 });
 connection.onShutdown(() => {
-	jsonDocuments.dispose();
+	yamlDocuments.dispose();
 });
 
-function getJSONDocument(document: TextDocument): JSONDocument {
-	return jsonDocuments.get(document);
+function getJSONDocument(document: TextDocument): YAMLDocument {
+	return yamlDocuments.get(document);
 }
+
+/** Disabled, implementation is too JSON centric
 
 connection.onCompletion(textDocumentPosition => {
 	let document = documents.get(textDocumentPosition.textDocument.uri);
@@ -295,6 +300,8 @@ connection.onCompletion(textDocumentPosition => {
 connection.onCompletionResolve(completionItem => {
 	return languageService.doResolve(completionItem);
 });
+
+*/
 
 connection.onHover(textDocumentPositionParams => {
 	let document = documents.get(textDocumentPositionParams.textDocument.uri);
@@ -308,9 +315,9 @@ connection.onDocumentSymbol(documentSymbolParams => {
 	return languageService.findDocumentSymbols(document, jsonDocument);
 });
 
-connection.onDocumentRangeFormatting(formatParams => {
+connection.onDocumentFormatting(formatParams => {
 	let document = documents.get(formatParams.textDocument.uri);
-	return languageService.format(document, formatParams.range, formatParams.options);
+	return languageService.format(document, formatParams.options);
 });
 
 connection.onRequest(ColorSymbolRequest.type, uri => {

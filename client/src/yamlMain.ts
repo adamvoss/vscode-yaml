@@ -1,4 +1,5 @@
 /*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Adam Voss. All rights reserved.
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -8,7 +9,6 @@ import * as path from 'path';
 
 import { workspace, languages, ExtensionContext, extensions, Uri, Range } from 'vscode';
 import { LanguageClient, LanguageClientOptions, RequestType, ServerOptions, TransportKind, NotificationType, DidChangeConfigurationNotification } from 'vscode-languageclient';
-import TelemetryReporter from 'vscode-extension-telemetry';
 import { ConfigurationFeature } from 'vscode-languageclient/lib/proposed';
 import { ColorProvider } from './colorDecorators';
 
@@ -20,7 +20,7 @@ namespace VSCodeContentRequest {
 }
 
 namespace ColorSymbolRequest {
-	export const type: RequestType<string, Range[], any, any> = new RequestType('json/colorSymbols');
+	export const type: RequestType<string, Range[], any, any> = new RequestType('yaml/colorSymbols');
 }
 
 export interface ISchemaAssociations {
@@ -61,11 +61,9 @@ interface JSONSchemaSettings {
 export function activate(context: ExtensionContext) {
 
 	let packageInfo = getPackageInfo(context);
-	let telemetryReporter: TelemetryReporter = packageInfo && new TelemetryReporter(packageInfo.name, packageInfo.version, packageInfo.aiKey);
-	context.subscriptions.push(telemetryReporter);
 
 	// The server is implemented in node
-	let serverModule = context.asAbsolutePath(path.join('server', 'out', 'jsonServerMain.js'));
+	let serverModule = context.asAbsolutePath(path.join('server', 'out', 'yamlServerMain.js'));
 	// The debug options for the server
 	let debugOptions = { execArgv: ['--nolazy', '--inspect=6004'] };
 
@@ -78,12 +76,12 @@ export function activate(context: ExtensionContext) {
 
 	// Options to control the language client
 	let clientOptions: LanguageClientOptions = {
-		// Register the server for json documents
-		documentSelector: ['json'],
+		// Register the server for yaml documents
+		documentSelector: ['yaml'],
 		synchronize: {
-			// Synchronize the setting section 'json' to the server
-			configurationSection: ['json', 'http'],
-			fileEvents: workspace.createFileSystemWatcher('**/*.json')
+			// Synchronize the setting section 'yaml' to the server
+			configurationSection: ['yaml', 'http'],
+			fileEvents: workspace.createFileSystemWatcher('**/*.?(e)y?(a)ml')
 		},
 		middleware: {
 			workspace: {
@@ -93,17 +91,11 @@ export function activate(context: ExtensionContext) {
 	};
 
 	// Create the language client and start the client.
-	let client = new LanguageClient('json', localize('jsonserver.name', 'JSON Language Server'), serverOptions, clientOptions);
+	let client = new LanguageClient('yaml', localize('yamlserver.name', 'YAML Language Server'), serverOptions, clientOptions);
 	client.registerFeature(new ConfigurationFeature(client));
 
 	let disposable = client.start();
 	client.onReady().then(() => {
-		client.onTelemetry(e => {
-			if (telemetryReporter) {
-				telemetryReporter.sendTelemetryEvent(e.key, e.data);
-			}
-		});
-
 		// handle content request
 		client.onRequest(VSCodeContentRequest.type, (uriPath: string) => {
 			let uri = Uri.parse(uriPath);
@@ -120,14 +112,14 @@ export function activate(context: ExtensionContext) {
 			return client.sendRequest(ColorSymbolRequest.type, uri).then(ranges => ranges.map(client.protocol2CodeConverter.asRange));
 		};
 
-		context.subscriptions.push(languages.registerColorProvider('json', new ColorProvider(colorRequestor)));
+		context.subscriptions.push(languages.registerColorProvider('yaml', new ColorProvider(colorRequestor)));
 	});
 
 	// Push the disposable to the context's subscriptions so that the
 	// client can be deactivated on extension deactivation
 	context.subscriptions.push(disposable);
 
-	languages.setLanguageConfiguration('json', {
+	languages.setLanguageConfiguration('yaml', {
 		wordPattern: /("(?:[^\\\"]*(?:\\.)?)*"?)|[^\s{}\[\],:]+/,
 		indentationRules: {
 			increaseIndentPattern: /^.*(\{[^}]*|\[[^\]]*)$/,
