@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+- Update **vscode-json-languageservice** to the current latest version (2.0.14) by updating **vscode-yaml-languageservice**.
+- **vscode-yaml-languageservice** dependency is now managed by `npm`.  This makes development easier.
+
 ## 0.0.7
 - Add support for multiple documents in a single file.
 
