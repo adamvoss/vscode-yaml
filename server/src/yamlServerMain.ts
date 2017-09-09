@@ -322,14 +322,5 @@ connection.onDocumentFormatting(formatParams => {
 	return languageService.format(document, formatParams.options);
 });
 
-connection.onRequest(ColorSymbolRequest.type, uri => {
-	let document = documents.get(uri);
-	if (document) {
-		let jsonDocument = getJSONDocument(document);
-		return languageService.findColorSymbols(document, jsonDocument);
-	}
-	return [];
-});
-
 // Listen on the connection
 connection.listen();

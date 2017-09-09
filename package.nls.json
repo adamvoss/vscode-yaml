@@ -1,4 +1,3 @@
 {
-    "yaml.colorDecorators.enable.desc": "Enables or disables color decorators",
     "yaml.format.enable.desc": "Enable/disable default YAML formatter (requires restart)"
 }
