@@ -83,7 +83,7 @@ export function activate(context: ExtensionContext) {
 			return client.sendRequest(ColorSymbolRequest.type, uri).then(ranges => ranges.map(client.protocol2CodeConverter.asRange));
 		};
 		let isDecoratorEnabled = (languageId: string) => {
-			return workspace.getConfiguration().get<boolean>(languageId + '.colorDecorators.enable');
+			return false;
 		};
 		disposable = activateColorDecorations(colorRequestor, { yaml: true }, isDecoratorEnabled);
 		context.subscriptions.push(disposable);

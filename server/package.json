@@ -12,7 +12,7 @@
     "request-light": "^0.2.1",
     "vscode-languageserver": "^3.1.0-alpha.1",
     "vscode-nls": "^2.0.2",
-    "vscode-yaml-languageservice": "^0.1.0"
+    "vscode-yaml-languageservice": "^0.2.0"
   },
   "devDependencies": {
     "@types/node": "^6.0.51"
