@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 0.0.9
 - Update **vscode-yaml-languageservice** to 0.2.0
   - Disables legacy (pre-1.2) YAML compatibility when formatting.  This gives cleaner results in some files (like `.travis.yml`) where this extension may have been forcing unnecessary escaping (quoting).
   - Removes the (never-working) color symbol support
