@@ -23,6 +23,7 @@ Schemas are handled exactly [same way they are with JSON in Visual Studio Code](
 ## Known Issues
  - No support has been implemented for include references. ([relevant code](https://github.com/adamvoss/vscode-yaml-languageservice/blob/9199669d241f8fb5fde801399c4cd5abd0bc6d52/src/parser/yamlParser.ts#L243-L247))
  - Formatter strips comments and `---` yaml marker. see [issues/#9](https://github.com/adamvoss/vscode-yaml/issues/9)
+ - Formatter renames anchors/references in the style &ref12/*ref12
 
 ## Acknowledgments
 This extension would not have been possible without numerous open source projects.  Please see [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md).
