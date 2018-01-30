@@ -2,7 +2,7 @@
   "name": "yaml",
   "displayName": "YAML",
   "description": "YAML for Visual Studio Code",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "publisher": "adamvoss",
   "license": "MIT",
   "repository": {

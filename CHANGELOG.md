@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.10
+- README lists more known issues thanks to [Mark Ayers](https://github.com/philoserf)
+  - There are no functional changes from 0.0.9, but a release is required to update the marketplace.
+
 ## 0.0.9
 - Update **vscode-yaml-languageservice** to 0.2.0
   - Disables legacy (pre-1.2) YAML compatibility when formatting.  This gives cleaner results in some files (like `.travis.yml`) where this extension may have been forcing unnecessary escaping (quoting).
